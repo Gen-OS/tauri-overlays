@@ -3,7 +3,7 @@
     windows_subsystem = "macos"
 )]
 
-use tauri::window::WindowBuilder;
+use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
 
 #[derive(Clone, serde::Serialize, serde::Deserialize, Debug)]
 struct WindowOptions {
@@ -21,16 +21,17 @@ async fn create_overlay_window(
 ) -> Result<(), String> {
     println!("Creating window with options: {:?}", options);
     
-    let window = WindowBuilder::new(
+    let window = WebviewWindowBuilder::new(
         &app,
         options.title.clone(),
+        WebviewUrl::App("/overlay".into())
     )
     .inner_size(options.width, options.height)
     .position(options.x, options.y)
     .decorations(false)
-    .transparent(false)
+    .transparent(true)
     .always_on_top(true)
-    .center()
+    .visible(true)
     .build()
     .map_err(|e| e.to_string())?;
     

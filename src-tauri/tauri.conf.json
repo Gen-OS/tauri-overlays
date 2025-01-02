@@ -54,12 +54,5 @@
       "entitlements": "Entitlements.plist"
     },
     "createUpdaterArtifacts": true
-  },
-  "plugins": {
-    "updater": {
-      "active": true,
-      "endpoints": ["https://github.com/yourusername/overlay-app/releases/latest/download/latest.json"],
-      "pubkey": ""
-    }
   }
 }
