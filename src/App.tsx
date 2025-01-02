@@ -24,9 +24,9 @@ function App() {
   }
 
   return (
-    <div className="w-screen h-screen bg-transparent flex flex-col items-center justify-center">
+    <div data-tauri-drag-region className="w-screen h-screen bg-transparent flex flex-col items-center justify-center">
       <FloatingIcon onWindowCreate={createNewWindow} />
-      <div 
+      <div data-tauri-drag-region
         className="mt-4 w-32 bg-gray-900 px-4 py-2 rounded-lg shadow-lg border border-gray-700" 
         style={{ 
           backgroundColor: '#111827',
@@ -34,7 +34,7 @@ function App() {
           justifyContent: 'center',
         }}
       >
-        <span className="text-white text-sm font-medium select-none">
+        <span data-tauri-drag-region className="text-white text-sm font-medium select-none">
           Windows: {windowCount}
         </span>
       </div>

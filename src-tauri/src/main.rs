@@ -53,6 +53,7 @@ fn main() {
             .inner_size(128.0, 200.0)
             .decorations(false)
             .transparent(true)
+            .resizable(false)
             .always_on_top(true)
             .center()
             .build()?;

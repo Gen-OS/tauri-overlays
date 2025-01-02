@@ -31,8 +31,12 @@ export const FloatingIcon = ({ onWindowCreate }: Props) => {
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
+      style={{ 
+        display: 'flex',
+        justifyContent: 'center',
+      }}
     >
-      <img 
+      <img data-tauri-drag-region
         src="/logo.svg" 
         alt="Logo"
         width="128"
