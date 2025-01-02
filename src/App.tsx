@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { invoke } from '@tauri-apps/api'
+import { invoke } from '@tauri-apps/api/core'
 
 function App() {
   const [overlayCount, setOverlayCount] = useState(0)
@@ -31,11 +31,14 @@ function App() {
     <div className="fixed inset-0 bg-blue-500 flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-lg">
         <h1 className="text-2xl font-bold mb-4">Overlay Controls</h1>
+        <div className="text-sm text-gray-600 mb-4">
+          Window Count: {overlayCount}
+        </div>
         <button
           onClick={createNewOverlay}
           className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
         >
-          Create New Overlay ({overlayCount})
+          Create New Overlay
         </button>
       </div>
     </div>
