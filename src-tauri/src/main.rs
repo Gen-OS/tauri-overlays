@@ -32,6 +32,7 @@ async fn create_overlay_window(
     .transparent(true)
     .always_on_top(true)
     .visible(true)
+    .resizable(false)
     .build()
     .map_err(|e| e.to_string())?;
     
@@ -43,7 +44,20 @@ async fn create_overlay_window(
 fn main() {
     tauri::Builder::default()
         .setup(|app| {
-            println!("Application setup started");
+            let main_window = WebviewWindowBuilder::new(
+                app,
+                "main",
+                WebviewUrl::App("/".into())
+            )
+            .title("Overlays")
+            .inner_size(128.0, 200.0)
+            .decorations(false)
+            .transparent(true)
+            .always_on_top(true)
+            .center()
+            .build()?;
+
+            println!("Main window created successfully");
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![create_overlay_window])

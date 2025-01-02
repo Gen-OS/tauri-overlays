@@ -11,17 +11,7 @@
   },
       "app": {
     "macOSPrivateApi": true,
-    "windows": [
-      {
-        "title": "Main Overlay",
-        "width": 800,
-        "height": 600,
-        "decorations": false,
-        "transparent": false,
-        "alwaysOnTop": true,
-        "center": true
-      }
-    ],
+    "windows": [],
     "security": {
       "capabilities": ["default"],
       "csp": {

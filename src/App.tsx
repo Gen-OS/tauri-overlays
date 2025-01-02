@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { invoke } from '@tauri-apps/api/core'
 import { Outlet } from 'react-router-dom'
+import FloatingIcon from './components/FloatingIcon'
 
 function App() {
   const [windowCount, setWindowCount] = useState(0)
@@ -10,7 +11,7 @@ function App() {
       title: `overlay-${windowCount + 1}`,
       width: 300,
       height: 200,
-      x: 100 + (windowCount * 20),
+      x: 100 + (windowCount * 20), // Offset each window
       y: 100 + (windowCount * 20)
     }
 
@@ -23,23 +24,22 @@ function App() {
   }
 
   return (
-    <>
-      <div className="fixed inset-0 bg-blue-500 flex items-center justify-center">
-        <div className="bg-white p-8 rounded-lg shadow-lg">
-          <h1 className="text-2xl font-bold mb-4">Window Controls</h1>
-          <div className="text-sm text-gray-600 mb-4">
-            Window Count: {windowCount}
-          </div>
-          <button
-            onClick={createNewWindow}
-            className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
-          >
-            Create New Window
-          </button>
-        </div>
+    <div className="w-screen h-screen bg-transparent flex flex-col items-center justify-center">
+      <FloatingIcon onWindowCreate={createNewWindow} />
+      <div 
+        className="mt-4 w-32 bg-gray-900 px-4 py-2 rounded-lg shadow-lg border border-gray-700" 
+        style={{ 
+          backgroundColor: '#111827',
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <span className="text-white text-sm font-medium select-none">
+          Windows: {windowCount}
+        </span>
       </div>
       <Outlet />
-    </>
+    </div>
   )
 }
 
