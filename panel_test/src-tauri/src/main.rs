@@ -4,7 +4,17 @@
 )]
 
 use tauri::{AppHandle, Manager, WebviewWindow, WebviewWindowBuilder, WebviewUrl};
-use tauri_nspanel::{panel_delegate, ManagerExt, WebviewWindowExt, cocoa::appkit::NSWindowCollectionBehavior};
+use tauri_nspanel::{
+    cocoa::{
+        appkit::{
+            NSMainMenuWindowLevel, NSWindowCollectionBehavior, NSWindow,
+            NSColor,
+        },
+        base::{id, nil, NO, YES},
+    },
+    objc::{msg_send, sel, sel_impl, class, declare::ClassDecl, runtime::{Object, Sel}},
+    panel_delegate, ManagerExt, WebviewWindowExt as PanelWebviewWindowExt,
+};
 
 
 #[derive(Clone, serde::Serialize, serde::Deserialize, Debug)]
@@ -107,22 +117,29 @@ fn init(app_handle: &AppHandle) {
         }
     }));
 
-    // Set the window to float level
+    // Set the window to float level and make it higher than normal windows
     #[allow(non_upper_case_globals)]
-    const NSFloatWindowLevel: i32 = 4;
-    panel.set_level(NSFloatWindowLevel);
+    const NSFloatingWindowLevel: i32 = 3;
+    panel.set_level(NSFloatingWindowLevel);
 
+    // Make the panel non-activating but still accept mouse events
     #[allow(non_upper_case_globals)]
     const NSWindowStyleMaskNonActivatingPanel: i32 = 1 << 7;
-    // Ensures the panel cannot activate the app
     panel.set_style_mask(NSWindowStyleMaskNonActivatingPanel);
 
-    // Allows the panel to:
-    // - display on the same space as the full screen window
-    // - join all spaces
+    // Allow the panel to be clickable without activation
+    unsafe {
+        let ns_window: id = window.ns_window().unwrap() as _;
+        let _: () = msg_send![ns_window, setIgnoresMouseEvents:false];
+        let _: () = msg_send![ns_window, setAcceptsMouseMovedEvents:true];
+        let _: () = msg_send![ns_window, setFloatingPanel: YES];
+    }
+
+    // Configure collection behavior
     panel.set_collection_behaviour(
         NSWindowCollectionBehavior::NSWindowCollectionBehaviorFullScreenAuxiliary |
-        NSWindowCollectionBehavior::NSWindowCollectionBehaviorCanJoinAllSpaces
+        NSWindowCollectionBehavior::NSWindowCollectionBehaviorCanJoinAllSpaces |
+        NSWindowCollectionBehavior::NSWindowCollectionBehaviorIgnoresCycle
     );
 
     panel.set_delegate(delegate);

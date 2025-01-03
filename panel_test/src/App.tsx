@@ -11,7 +11,7 @@ function App() {
       title: `overlay-${windowCount + 1}`,
       width: 300,
       height: 200,
-      x: 100 + (windowCount * 20), // Offset each window
+      x: 100 + (windowCount * 20),
       y: 100 + (windowCount * 20)
     }
 
@@ -24,15 +24,10 @@ function App() {
   }
 
   return (
-    <div data-tauri-drag-region className="w-screen h-screen bg-transparent flex flex-col items-center justify-center">
+    <div data-tauri-drag-region className="w-screen h-screen bg-transparent flex flex-col items-center justify-center pointer-events-auto">
       <FloatingIcon onWindowCreate={createNewWindow} />
       <div data-tauri-drag-region
         className="mt-4 w-32 bg-gray-900 px-4 py-2 rounded-lg shadow-lg border border-gray-700" 
-        style={{ 
-          backgroundColor: '#111827',
-          display: 'flex',
-          justifyContent: 'center',
-        }}
       >
         <span data-tauri-drag-region className="text-white text-sm font-medium select-none">
           Windows: {windowCount}
