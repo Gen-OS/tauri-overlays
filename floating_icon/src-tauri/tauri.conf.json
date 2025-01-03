@@ -9,7 +9,7 @@
     "beforeBuildCommand": "pnpm build",
     "frontendDist": "../dist"
   },
-      "app": {
+  "app": {
     "macOSPrivateApi": true,
     "windows": [],
     "security": {
